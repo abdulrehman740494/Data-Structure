@@ -20,8 +20,7 @@ CNode *Clist = NULL;
 
 void insert_course(int value)
 {
-    CNode *temp;
-    temp = (CNode *)malloc(sizeof(CNode));
+    CNode *temp= (CNode *)malloc(sizeof(CNode));
     temp->CNo = value;
     temp->Cnext = NULL;
 
@@ -167,8 +166,7 @@ void insert_stu(int val1, int val2)
 
         if (val1 == Ccurr->CNo)
         {
-            SNode *temp;
-            temp = (SNode *)malloc(sizeof(SNode));
+            SNode * temp = (SNode *)malloc(sizeof(SNode));
             temp->SNo = val2;
             temp->Snext = NULL;
 
