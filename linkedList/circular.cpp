@@ -23,14 +23,14 @@ void insert(int value)
     }
 
     Node *cur = list;
-while (cur->next != list)   {
-
+    while (cur->next != list)
+    {
 
         cur = cur->next;
 
-    cur->next = temp;
-    temp->next = list;
-}
+        cur->next = temp;
+        temp->next = list;
+    }
 }
 
 void display()
@@ -113,7 +113,6 @@ void deleteElement(int value)
 
     prev = list;
     curr = list->next;
-
 
     while (curr != list)
     {

@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
 
-struct Node {
+struct Node
+{
     int data;
     Node *next;
 };
@@ -9,57 +10,74 @@ struct Node {
 const int SIZE = 10;
 Node HT[SIZE];
 
-void insert(int value){
+void insert(int value)
+{
 
     int index = value % SIZE;
 
-    if (HT[index].data == -1){
+    if (HT[index].data == -1)
+    {
         HT[index].data = value;
-    }else{
+    }
+    else
+    {
         Node *temp = new Node();
         temp->data = value;
         temp->next = NULL;
-        Node * curr = HT[index].next;
-        if (curr==NULL){
+        Node *curr = HT[index].next;
+        if (curr == NULL)
+        {
             HT[index].next = temp;
         }
-        else{
-            while(curr->next !=NULL){
+        else
+        {
+            while (curr->next != NULL)
+            {
                 curr = curr->next;
             }
             curr->next = temp;
         }
-
     }
 }
 
-bool search(int value){
+bool search(int value)
+{
     int index = value % SIZE;
 
     if (HT[index].data == -1)
         return false;
-    
-    if (HT[index].data == value)
-        return true;
 
-    Node *curr = HT[index].next;
-    while(curr!=NULL){
-        if (curr->data == value)
-            return true;
-        curr = curr->next;
+    if (HT[index].data == value)
+    {
+        return true;
+    }
+    else
+    {
+        Node *curr = HT[index].next;
+        while (curr != NULL)
+        {
+            if (curr->data == value)
+                return true;
+            curr = curr->next;
+        }
     }
     return false;
 }
 
-void display(){
-    for (int i = 0; i < SIZE;i++){
-        if(HT[i].data==-1){
+void display()
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (HT[i].data == -1)
+        {
             cout << "Empty";
         }
-        else{
+        else
+        {
             cout << HT[i].data << " ";
             Node *curr = HT[i].next;
-            while(curr!=NULL){
+            while (curr != NULL)
+            {
                 cout << curr->data << " ";
                 curr = curr->next;
             }
@@ -69,58 +87,68 @@ void display(){
     }
 }
 
-int main(){
-    for (int i = 0; i < 10; i++){
+int main()
+{
+    for (int i = 0; i < 10; i++)
+    {
         HT[i].data = -1;
         HT[i].next = NULL;
     }
 
     int choice;
 
-    do{
+    do
+    {
         cout << "\n===== MENU =====\n";
         cout << "1. Insert element\n";
         cout << "2. Search element\n";
         cout << "3. Display Hashtable\n";
         cout << "4. Exit\n";
-        cout << "Enter choice:"<< endl;
+        cout << "Enter choice:" << endl;
 
         cin >> choice;
 
-        switch (choice) {
+        switch (choice)
+        {
 
-            case 1: {
-                int val;
-                cout << "Enter number: \n";
-                cin >> val;
-                insert(val);
-                break;
-            }
-
-            case 2: {
-                int val;
-                cout << "Enter number to search: \n";
-                cin >> val;
-                if (search(val) == true){
-                    cout << "Found"<<endl;
-                }else{
-                    cout << "Not found"<<endl;
-                }
-
-                break;
-            }
-
-            case 3: {
-                display();
-            }
-
-            case 4: {
-                break;
-            }
-
-            default:
-                cout << "Invalid choice\n";
-
+        case 1:
+        {
+            int val;
+            cout << "Enter number: \n";
+            cin >> val;
+            insert(val);
+            break;
         }
-    }while(choice!=4);
+
+        case 2:
+        {
+            int val;
+            cout << "Enter number to search: \n";
+            cin >> val;
+            if (search(val) == true)
+            {
+                cout << "Found" << endl;
+            }
+            else
+            {
+                cout << "Not found" << endl;
+            }
+
+            break;
+        }
+
+        case 3:
+        {
+            display();
+        }
+
+        case 4:
+        {
+            break;
+        }
+
+        default:
+            cout << "Invalid choice\n";
+        }
+    } while (choice != 4);
 }

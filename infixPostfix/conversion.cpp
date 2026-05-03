@@ -82,7 +82,7 @@ void InfixToPostfix(char str[])
     int i = 0;
     char x;
 
-    while(str[i] != '\0')
+    while(str[i] != '\0')   //0 = null character  cvr all characters in the string until we reach the end of the string
     {
         x = str[i];
 

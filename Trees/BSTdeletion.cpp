@@ -50,6 +50,77 @@ void InOrder(Node* curr) {
     }
 }
 
+Node* minNode(Node* curr) {
+    Node* temp = curr;
+    while (temp->left != NULL) {
+        temp = temp->left;
+    }
+    return temp;
+}
+
+
+Node* deleteNode(Node* curr, int val) {
+    if (curr == NULL) {
+        cout << "Value not found\n";
+        return NULL;
+    }
+
+    if (val < curr->data) {
+        curr->left = deleteNode(curr->left, val);
+    }
+    else if (val > curr->data) {
+        curr->right = deleteNode(curr->right, val);
+    }
+    else {
+        
+        //0 child
+        if (curr->left == NULL && curr->right == NULL) {
+            delete curr;
+            return NULL;
+        }
+
+        //1 child on right
+        if (curr->left == NULL) {
+            Node* temp = curr->right;
+            delete curr;
+            return temp;
+        }
+
+        //1 child on left
+        if (curr->right == NULL) {
+            Node* temp = curr->left;
+            delete curr;
+            return temp;
+        }
+
+        //2 children
+        Node* temp = minNode(curr->right);
+        curr->data = temp->data;
+        curr->right = deleteNode(curr->right, temp->data);
+    }
+
+    return curr;
+}
+
+void Search(Node*curr,int value){
+    if (curr==NULL)
+    {
+        cout <<  "Value is not found." << endl;
+        return;
+    }
+    if (curr->data==value)
+    {
+        cout<< "Value Found : " << curr->data << endl;
+        return;
+    }else if (value<curr->data){
+        Search(curr->left,value);
+    }
+    else {
+        Search(curr->right,value);
+    }
+}
+
+
 int main() {
     int choice;
 
@@ -57,7 +128,10 @@ int main() {
         cout << "\n===== MENU =====\n";
         cout << "1. Insert element\n";
         cout << "2. Display tree\n";
-        cout << "3. Exit\n";
+        cout << "3. Delete element\n";
+        cout << "4. Search element\n";
+        cout << "5. Exit\n";
+        
         cout << "Enter choice: ";
 
         cin >> choice;
@@ -96,12 +170,26 @@ int main() {
             }
 
             case 3:
-                cout << "Goodbye\n";
+                cout << "Enter the element you want to delete";
+                int del;
+                cin >> del;
+                deleteNode(Root, del);
+
+            case 4:
+                cout << "Enter the element you want to search";
+                int searchVal;
+                cin >> searchVal;
+                Search(Root, searchVal);
+                break;
+
+            case 5:
+                cout << "Exiting...\n";
                 break;
 
             default:
                 cout << "Invalid choice\n";
         }
 
-    } while (choice != 3);
+    } while (choice != 5);
 }
+
