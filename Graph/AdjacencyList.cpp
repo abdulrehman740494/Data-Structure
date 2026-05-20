@@ -32,8 +32,7 @@ Vertex *pop()
     }
 
     stack *temp = Top;
-    Vertex *value;
-    value = temp->data;
+    Vertex *value = temp->data;
     Top = Top->next;
     free(temp);
     return value;
@@ -186,14 +185,13 @@ void addEdge(char vertex1, char vertex2)
 void display()
 {
     Vertex *curr = graph;
-    Edge *ecurr;
     if (graph != NULL)
     {
         while (curr != NULL)
         {
 
             cout << curr->data << " | ";
-            ecurr = curr->Edgelist;
+            Edge *ecurr = curr->Edgelist;
             while (ecurr != NULL)
             {
                 cout << ecurr->v->data << " ";
@@ -314,22 +312,21 @@ void RemoveVertex(char value)
             if (e->v->data == value)
             {
                 Edge *temp = e;
-                e = e->enext;
+                
                 if (eprev == NULL)
                 {
-                    V->Edgelist = e;
+                    V->Edgelist = e->enext;;
                 }
                 else
                 {
-                    eprev->enext = e;
+                    eprev->enext = e->enext;;
                 }
                 free(temp);
             }
-            else
-            {
+        
                 eprev = e;
                 e = e->enext;
-            }
+            
         }
         V = V->vnext;
     }

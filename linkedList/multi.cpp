@@ -2,6 +2,13 @@
 #include <stdlib.h>
 using namespace std;
 
+struct CNode
+{
+    int CNo;
+    CNode *Cnext;
+    SNode *stu_list;
+};
+
 struct SNode
 {
     int SNo;
@@ -9,12 +16,6 @@ struct SNode
     SNode *stu_list;
 };
 
-struct CNode
-{
-    int CNo;
-    CNode *Cnext;
-    SNode *stu_list;
-};
 
 CNode *Clist = NULL;
 
@@ -56,7 +57,7 @@ void search_course(int value)
     cout << "Value not found: " << value << endl;
 }
 
-void search_stu_in_course(int course, int seat)
+void search_stu_in_course(int course, int seat) // this function is for searching a student in a specific course
 {
     CNode *Ccurr = Clist;
     bool found = false;
@@ -112,7 +113,7 @@ void search_stu_in_course(int course, int seat)
     }
 }
 
-void search_student(int seat)
+void search_student(int seat)  // this function is for searching a student in all the courses and count the number of courses in which the student is enrolled
 {
     CNode *Ccurr = Clist;
     int count = 0;
@@ -158,16 +159,16 @@ void display_course()
     }
 }
 
-void insert_stu(int val1, int val2)
+void insert_stu(int course, int seat)
 {
     CNode *Ccurr = Clist;
     while (Ccurr != NULL)
     {
 
-        if (val1 == Ccurr->CNo)
+        if (course == Ccurr->CNo)
         {
             SNode * temp = (SNode *)malloc(sizeof(SNode));
-            temp->SNo = val2;
+            temp->SNo = seat;
             temp->Snext = NULL;
 
             if (Ccurr->stu_list == NULL)

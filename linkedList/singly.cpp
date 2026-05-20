@@ -76,6 +76,22 @@ void deleteElement(int value)
     }
 }
 
+Node * reverse(Node *list)
+{
+    Node *prev = NULL;
+    Node *cur = list;
+    Node *next = NULL;
+
+    while (cur != NULL)
+    {
+        next = cur->next;
+        cur->next = prev;
+        prev = cur;
+        cur = next;
+    }
+    return prev;
+}
+
 bool search(int value)
 {
 
@@ -109,7 +125,8 @@ int main()
         cout << "2- Display" << endl;
         cout << "3- Search" << endl;
         cout << "4- Delete" << endl;
-        cout << "5- Exit" << endl;
+        cout << "5- Reverse" << endl;
+        cout << "6- Exit" << endl;
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -139,6 +156,12 @@ int main()
             cout << " Deleted " << val << endl;
         }
         else if (choice == 5)
+        {
+            list = reverse(list);
+            cout << "✓ List reversed" << endl;
+            display();
+        }
+        else if (choice == 6)
         {
             cout << "Exiting..." << endl;
             break;
