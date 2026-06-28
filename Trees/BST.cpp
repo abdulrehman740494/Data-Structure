@@ -18,11 +18,12 @@ Node* insertElement(Node* curr, int val) {
         return temp;
     }
 
-    if (val > curr->data)
+    else if (val > curr->data){
         curr->right = insertElement(curr->right, val);
-    else
+    }
+    else{
         curr->left = insertElement(curr->left, val);
-
+    }   
     return curr;
 }
 

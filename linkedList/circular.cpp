@@ -91,7 +91,6 @@ void deleteElement(int value)
 
     if (list->data == value && list->next == list)
     {
-        Node *curr = list;
         list = NULL;
         delete curr;
         return;
@@ -104,8 +103,8 @@ void deleteElement(int value)
             curr = curr->next;
 
         Node *temp = list;
-        curr->next = list->next;
         list = list->next;
+        curr->next = list;
         delete temp;
         return;
     }

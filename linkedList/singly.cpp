@@ -54,7 +54,7 @@ void deleteElement(int value)
     }
 
     Node *cur = list;
-    if (value = list->data)
+    if (value == list->data)
     {
         list = list->next;
         free(cur);

@@ -37,13 +37,13 @@ Vertex *pop()
     free(temp);
     return value;
 }
-struct dqueue
+struct queue
 {
     Vertex *data;
-    dqueue *next;
+    queue *next;
 };
-dqueue *qrare = NULL;
-dqueue *qfront = NULL;
+queue *qrare = NULL;
+queue *qfront = NULL;
 
 void Enqueue(Vertex *value)
 {
@@ -52,13 +52,12 @@ void Enqueue(Vertex *value)
         return;
     }
 
-    dqueue *temp = (dqueue *)malloc(sizeof(dqueue));
+    queue *temp = (queue *)malloc(sizeof(queue));
     temp->data = value;
     temp->next = NULL;
     if (qrare == NULL && qfront == NULL)
     {
-        qrare = temp;
-        qfront = qrare;
+        qfront = qrare = temp;
     }
     else
     {
@@ -73,7 +72,7 @@ Vertex *Dequeue()
     {
         return NULL;
     }
-    dqueue *temp = qfront;
+    queue *temp = qfront;
     Vertex *value = temp->data;
 
     // if only one node.
@@ -217,8 +216,6 @@ void Degree()
         while (e != NULL)
         {
             count++;
-            //
-
             e = e->enext;
         }
         cout << "Degree of Vertix : " << count << endl;
@@ -299,7 +296,7 @@ void DFS()
         }
     }
 }
-void RemoveVertex(char value)
+void RemoveVertex(char value)  // Step 1: Remove all edges pointing to this vertex
 {
     Vertex *V = graph;
     while (V != NULL)
@@ -330,7 +327,8 @@ void RemoveVertex(char value)
         }
         V = V->vnext;
     }
-    V = graph;
+     // Step 2: Remove the vertex itself
+    Vertex *V = graph;
     Vertex *Vprev = NULL;
     while (V != NULL)
     {

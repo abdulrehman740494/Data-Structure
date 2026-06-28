@@ -167,7 +167,7 @@ void insert_stu(int course, int seat)
 
         if (course == Ccurr->CNo)
         {
-            SNode * temp = (SNode *)malloc(sizeof(SNode));
+            SNode * temp = new SNode();
             temp->SNo = seat;
             temp->Snext = NULL;
 

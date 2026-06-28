@@ -1,176 +1,271 @@
 #include <iostream>
 using namespace std;
 
-struct Stack {
-    char data;
-    Stack* next;
+//================ STACK FOR OPERATORS =================
+
+struct Node
+{
+    char value;
+    Node* next;
 };
 
-struct ETNode {
+Node* Top = NULL;
+
+void push(char operatorSymbol)
+{
+    Node* temp = new Node();
+
+    temp->value = operatorSymbol;
+    temp->next = Top;
+
+    Top = temp;
+}
+
+char peek()
+{
+    if (Top == NULL)
+        return '\0';
+
+    return Top->value;
+}
+
+char pop()
+{
+    if (Top == NULL)
+    {
+        return '\0';
+    }
+
+    Node* tempNode = Top;
+
+    char removedOperator = tempNode->value;
+
+    Top = Top->next;
+
+    delete tempNode;
+
+    return removedOperator;
+}
+
+int getPrecedence(char operatorSymbol)
+{
+    switch (operatorSymbol)
+    {
+    case '*':
+    case '/':
+        return 2;
+
+    case '+':
+    case '-':
+        return 1;
+
+    default:
+        return 0;
+    }
+}
+
+bool isOperand(char currentCharacter)
+{
+    if ((currentCharacter >= 'A' && currentCharacter <= 'Z') ||
+        (currentCharacter >= 'a' && currentCharacter <= 'z') ||
+        (currentCharacter >= '0' && currentCharacter <= '9'))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//================ INFIX TO POSTFIX =================
+
+void infixToPostfix(char expression[], char postfix[])
+{
+    int currentIndex = 0;
+    int k = 0;
+
+    while (expression[currentIndex] != '\0')
+    {
+        char currentCharacter = expression[currentIndex];
+
+        if (isOperand(currentCharacter))
+        {
+            postfix[k++] = currentCharacter;
+        }
+        else
+        {
+            while (Top != NULL &&
+                   getPrecedence(peek()) >=
+                   getPrecedence(currentCharacter))
+            {
+                postfix[k++] = pop();
+            }
+
+            push(currentCharacter);
+        }
+
+        currentIndex++;
+    }
+
+    while (Top != NULL)
+    {
+        postfix[k++] = pop();
+    }
+
+    postfix[k] = '\0';
+}
+
+//================ EXPRESSION TREE =================
+
+// Tree Node
+struct ETNode
+{
     char data;
     ETNode* left;
     ETNode* right;
 };
 
-struct Node {
+// Stack for Tree Nodes
+struct TreeStack
+{
     ETNode* data;
-    Node* next;
+    TreeStack* next;
 };
 
-Stack* stack = NULL;
-Node* tree = NULL;
+TreeStack* treeTop = NULL;
 
-/* ---------- STACK (CHAR) ---------- */
-void pushChar(char c) {
-    Stack* temp = new Stack;
-    temp->data = c;
-    temp->next = stack;
-    stack = temp;
+void pushTreeNode(ETNode* node)
+{
+    TreeStack* temp = new TreeStack;
+
+    temp->data = node;
+    temp->next = treeTop;
+
+    treeTop = temp;
 }
 
-char popChar() {
-    if (stack == NULL) return '\0';
-    Stack* temp = stack;
-    char c = temp->data;
-    stack = stack->next;
+ETNode* popTreeNode()
+{
+    if (treeTop == NULL)
+        return NULL;
+
+    TreeStack* temp = treeTop;
+
+    ETNode* node = temp->data;
+
+    treeTop = treeTop->next;
+
     delete temp;
-    return c;
+
+    return node;
 }
 
-char peekChar() {
-    if (stack == NULL) return '\0';
-    return stack->data;
+ETNode* createNode(char value)
+{
+    ETNode* temp = new ETNode();
+
+    temp->data = value;
+    temp->left = NULL;
+    temp->right = NULL;
+
+    return temp;
 }
 
-int isEmptyChar() {
-    return stack == NULL;
-}
-
-/* ---------- STACK (ETNode) ---------- */
-void pushNode(ETNode* n) {
-    Node* temp = new Node;
-    temp->data = n;
-    temp->next = tree;
-    tree = temp;
-}
-
-ETNode* popNode() {
-    if (tree == NULL) return NULL;
-    Node* temp = tree;
-    ETNode* n = temp->data;
-    tree = tree->next;
-    delete temp;
-    return n;
-}
-
-/* ---------- HELPERS ---------- */
-ETNode* createNode(char c) {
-    ETNode* n = new ETNode;
-    n->data = c;
-    n->left = NULL;
-    n->right = NULL;
-    return n;
-}
-
-int isOperator(char c) {
-    return c=='+' || c=='-' || c=='*' || c=='/' || c=='^';
-}
-
-int precedence(char c) {
-    if (c=='+' || c=='-') return 1;
-    if (c=='*' || c=='/') return 2;
-    if (c=='^') return 3;
-    return 0;
-}
-
-int isOperand(char c) {
-    if (c >= 'a' && c <= 'z') return 1;
-    if (c >= 'A' && c <= 'Z') return 1;
-    if (c >= '0' && c <= '9') return 1;
-    return 0;
-}
-
-/* ---------- INFIX → POSTFIX ---------- */
-void infixToPostfix(char infix[], char postfix[]) {
-    int i = 0, k = 0;
-
-    while (infix[i] != '\0') {
-        char c = infix[i];
-
-        if (isOperand(c)) {
-            postfix[k++] = c;
-        }
-        else if (c == '(') {
-            pushChar(c);
-        }
-        else if (c == ')') {
-            while (!isEmptyChar() && peekChar() != '(')
-                postfix[k++] = popChar();
-            popChar();
-        }
-        else if (isOperator(c)) {
-            while (!isEmptyChar() && precedence(peekChar()) >= precedence(c))
-                postfix[k++] = popChar();
-            pushChar(c);
-        }
-        i++;
-    }
-
-    while (!isEmptyChar())
-        postfix[k++] = popChar();
-
-    postfix[k] = '\0';
-}
-
-/* ---------- POSTFIX → TREE ---------- */
-ETNode* buildTree(char postfix[]) {
+// Build Tree from Postfix
+ETNode* buildExpressionTree(char postfix[])
+{
     int i = 0;
 
-    while (postfix[i] != '\0') {
-        char c = postfix[i];
+    while (postfix[i] != '\0')
+    {
+        char currentCharacter = postfix[i];
 
-        if (isOperand(c)) {
-            pushNode(createNode(c));
+        // Operand
+        if (isOperand(currentCharacter))
+        {
+            pushTreeNode(createNode(currentCharacter));
         }
-        else if (isOperator(c)) {
-            ETNode* right = popNode();
-            ETNode* left  = popNode();
 
-            ETNode* root = createNode(c);
-            root->left = left;
-            root->right = right;
+        // Operator
+        else
+        {
+            ETNode* rightChild = popTreeNode();
+            ETNode* leftChild = popTreeNode();
 
-            pushNode(root);
+            ETNode* newRoot = createNode(currentCharacter);
+
+            newRoot->left = leftChild;
+            newRoot->right = rightChild;
+
+            pushTreeNode(newRoot);
         }
+
         i++;
     }
 
-    return popNode();
+    return popTreeNode();
 }
 
-/* ---------- TRAVERSAL ---------- */
-void inorder(ETNode* root) {
-    if (root == NULL) return;
+//================ TRAVERSALS =================
+
+// Inorder Traversal
+void inorder(ETNode* root)
+{
+    if (root == NULL)
+        return;
+
     inorder(root->left);
     cout << root->data;
     inorder(root->right);
 }
 
-/* ---------- MAIN ---------- */
-int main() {
-    char infix[100], postfix[100];
-    ETNode* root;
+// Preorder Traversal
+void preorder(ETNode* root)
+{
+    if (root == NULL)
+        return;
 
-    cout << "Enter infix expression: ";
-    cin >> infix;
+    cout << root->data;
+    preorder(root->left);
+    preorder(root->right);
+}
 
-    infixToPostfix(infix, postfix);
-    cout << "Postfix: " << postfix << endl;
+// Postorder Traversal
+void postorder(ETNode* root)
+{
+    if (root == NULL)
+        return;
 
-    root = buildTree(postfix);
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data;
+}
 
-    cout << "Inorder: ";
+//================ MAIN =================
+
+int main()
+{
+    char expression[100];
+    char postfix[100];
+
+    cout << "Enter Infix Expression: ";
+    cin >> expression;
+
+    infixToPostfix(expression, postfix);
+
+    cout << "Postfix Expression: " << postfix << endl;
+
+    // Build Expression Tree
+    ETNode* root = buildExpressionTree(postfix);
+
+    cout << "Inorder Traversal: ";
     inorder(root);
+
+    cout << "\nPreorder Traversal: ";
+    preorder(root);
+
+    cout << "\nPostorder Traversal: ";
+    postorder(root);
+
     cout << endl;
 
     return 0;

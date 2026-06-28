@@ -1,46 +1,64 @@
 #include <iostream>
 using namespace std;
 
-struct Node{
-    char data;
-    Node *next;
+// Node of Stack
+struct Node
+{
+    char value;      // Stores operator (+, -, *, etc.)
+    Node* next;      // Points to next node
 };
 
-Node *top = NULL;
+// Top pointer of stack
+Node* Top = NULL;
 
-void push(char z)
+
+// Function to insert an operator into stack
+void push(char operatorSymbol)
 {
-    Node *temp = new Node();
-    temp->data = z;
-    temp->next = top;
-    top = temp;
+    Node* temp = new Node();
+
+    temp->value = operatorSymbol;
+    temp->next = Top;
+
+    Top = temp;
 }
 
+
+// Function to see top element without removing it
 char peek()
 {
-    if(top == NULL)
+    if (Top == NULL)
         return '\0';
 
-    return top->data;
+    return Top->value;
 }
 
+
+// Function to remove top element from stack
 char pop()
 {
-    if (top == NULL){
-        cout << "Stack underflow" << endl;
+    if (Top == NULL)
+    {
+        cout << "Stack Underflow\n";
         return '\0';
     }
 
-    Node* temp = top;
-    char z = temp->data;
-    top = top->next;
-    delete temp;
-    return z;
+    Node* tempNode = Top;
+
+    char removedOperator = tempNode->value;
+
+    Top = Top->next;
+
+    delete tempNode;
+
+    return removedOperator;
 }
 
-int precedence(char op)
+
+// Function to return precedence of operators
+int getPrecedence(char operatorSymbol)
 {
-    switch(op)
+    switch (operatorSymbol)
     {
         case '*':
         case '/':
@@ -69,54 +87,73 @@ int precedence(char op)
     }
 }
 
-int IsOperand(char x)
-{
-    if((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))
-        return 1;
 
-    return 0;
+// Checks whether character is operand or not
+bool isOperand(char currentCharacter)
+{
+    if ((currentCharacter >= 'A' && currentCharacter <= 'Z') ||
+        (currentCharacter >= 'a' && currentCharacter <= 'z') ||
+        (currentCharacter >= '0' && currentCharacter <= '9'))
+    {
+        return true;
+    }
+
+    return false;
 }
 
-void InfixToPostfix(char str[])
+
+// Converts Infix expression into Postfix
+void infixToPostfix(char expression[])
 {
-    int i = 0;
-    char x;
+    int currentIndex = 0;
 
-    while(str[i] != '\0')   //0 = null character  cvr all characters in the string until we reach the end of the string
+    while (expression[currentIndex] != '\0')
     {
-        x = str[i];
+        // Current character being processed
+        char currentCharacter = expression[currentIndex];
 
-        if(IsOperand(x))
+        // If operand, print directly
+        if (isOperand(currentCharacter))
         {
-            cout << x;
+            cout << currentCharacter;
         }
+
+        // If operator
         else
         {
-            while(top != NULL && precedence(peek()) >= precedence(x))
+            // Pop all operators having higher or equal precedence
+            while (Top != NULL &&
+                   getPrecedence(peek()) >=
+                   getPrecedence(currentCharacter))
             {
                 cout << pop();
             }
 
-            push(x);
+            // Push current operator
+            push(currentCharacter);
         }
 
-        i++;
+        currentIndex++;
     }
 
-    while(top != NULL)
+    // Print remaining operators from stack
+    while (Top != NULL)
     {
         cout << pop();
     }
 }
 
+
 int main()
 {
-    char xyz[100];
+    char expression[100];
 
-    cout << "Enter expression for conversion: ";
-    cin >> xyz;
+    cout << "Enter Infix Expression: ";
+    cin >> expression;
 
-    InfixToPostfix(xyz);
+    cout << "Postfix Expression: ";
+
+    infixToPostfix(expression);
 
     return 0;
 }
