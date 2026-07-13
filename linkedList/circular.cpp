@@ -14,7 +14,7 @@ void insert(int value)
 {
     Node *temp = new Node();
     temp->data = value;
-
+    temp->next = NULL;
     if (list == NULL)
     {
         list = temp;
@@ -25,12 +25,10 @@ void insert(int value)
     Node *cur = list;
     while (cur->next != list)
     {
-
         cur = cur->next;
-
-        cur->next = temp;
-        temp->next = list;
     }
+    cur->next = temp;
+    temp->next = list;
 }
 
 void display()
@@ -80,36 +78,39 @@ void deleteElement(int value)
 {
     if (list == NULL)
     {
-        cout << "List is empty" << endl;
+        cout << "List is empty\n";
         return;
     }
 
     Node *curr = list;
     Node *prev = NULL;
 
-    // Case 1: Only one node in the list and it matches the value
-
+    // Case 1: Only one node
     if (list->data == value && list->next == list)
     {
         list = NULL;
-        delete curr;
+        delete list;
         return;
     }
 
-    // Case 2: Deleting the head node (which may have multiple nodes in the list)
+    // Case 2: Delete head node
     if (list->data == value)
     {
+        // Find last node
         while (curr->next != list)
+        {
             curr = curr->next;
+        }
 
         Node *temp = list;
         list = list->next;
         curr->next = list;
+
         delete temp;
         return;
     }
-    // Case 3: Deleting a node other than the head
 
+    // Case 3: Delete other node
     prev = list;
     curr = list->next;
 
@@ -121,11 +122,12 @@ void deleteElement(int value)
             delete curr;
             return;
         }
+
         prev = curr;
         curr = curr->next;
     }
 
-    cout << "Value not found" << endl;
+    cout << "Value not found\n";
 }
 
 int main()

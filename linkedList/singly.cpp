@@ -79,8 +79,8 @@ void deleteElement(int value)
 Node * reverse(Node *list)
 {
     Node *prev = NULL;
-    Node *cur = list;
     Node *next = NULL;
+    Node *cur = list;
 
     while (cur != NULL)
     {

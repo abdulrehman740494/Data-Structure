@@ -1,0 +1,410 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *left;
+    Node *right;
+};
+
+Node *Root = NULL;
+
+//====================== Queue ======================
+
+Node *Queue[100];
+int front = -1;
+int rear = -1;
+
+bool isEmpty()
+{
+    return (front == -1);
+}
+
+void enqueue(Node *temp)
+{
+    if (front == -1)
+        front = 0;
+
+    Queue[++rear] = temp;
+}
+
+Node *dequeue()
+{
+    Node *temp = Queue[front];
+
+    if (front == rear)
+    {
+        front = rear = -1;
+    }
+    else
+    {
+        front++;
+    }
+
+    return temp;
+}
+
+//================ Heap Style Insertion ================
+
+void insertElement(int val)
+{
+    Node *temp = new Node();
+
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
+
+    if (Root == NULL)
+    {
+        Root = temp;
+        return;
+    }
+
+    // Reset Queue
+    front = rear = -1;
+
+    enqueue(Root);
+
+    while (!isEmpty())
+    {
+        Node *curr = dequeue();
+
+        // Left Empty
+        if (curr->left == NULL)
+        {
+            curr->left = temp;
+            return;
+        }
+        else
+        {
+            enqueue(curr->left);
+        }
+
+        // Right Empty
+        if (curr->right == NULL)
+        {
+            curr->right = temp;
+            return;
+        }
+        else
+        {
+            enqueue(curr->right);
+        }
+    }
+}
+
+//================ Traversals =================
+
+void InOrder(Node *curr)
+{
+    if (curr == NULL)
+        return;
+
+    InOrder(curr->left);
+
+    cout << curr->data << " ";
+
+    InOrder(curr->right);
+}
+
+//================ Search =================
+
+bool Search(Node *curr, int value)
+{
+    if (curr == NULL)
+        return false;
+
+    if (curr->data == value)
+        return true;
+
+    return Search(curr->left, value) ||
+           Search(curr->right, value);
+}
+
+//================ Mirror Image =================
+
+void mirror(Node *curr)
+{
+    if (curr == NULL)
+        return;
+
+    Node *temp = curr->left;
+    curr->left = curr->right;
+    curr->right = temp;
+
+    mirror(curr->left);
+    mirror(curr->right);
+}
+
+//================ Store Inorder =================
+
+int arr[100];
+int index = 0;
+
+void storeInorder(Node *curr)
+{
+    if (curr == NULL)
+        return;
+
+    storeInorder(curr->left);
+
+    arr[index++] = curr->data;
+
+    storeInorder(curr->right);
+}
+
+//================ Predecessor & Successor =================
+
+void predecessorSuccessor(int value)
+{
+    index = 0;
+
+    storeInorder(Root);
+
+    int pos = -1;
+
+    for (int i = 0; i < index; i++)
+    {
+        if (arr[i] == value)
+        {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1)
+    {
+        cout << "Value Not Found\n";
+        return;
+    }
+
+    if (pos == 0)
+        cout << "Predecessor : NULL\n";
+    else
+        cout << "Predecessor : " << arr[pos - 1] << endl;
+
+    if (pos == index - 1)
+        cout << "Successor : NULL\n";
+    else
+        cout << "Successor : " << arr[pos + 1] << endl;
+}
+
+//================ Find Level =================
+
+int findLevel(Node *curr, int value, int level)
+{
+    if (curr == NULL)
+        return -1;
+
+    if (curr->data == value)
+        return level;
+
+    int left = findLevel(curr->left, value, level + 1);
+
+    if (left != -1)
+        return left;
+
+    return findLevel(curr->right, value, level + 1);
+}
+
+//================ Find Node =================
+
+Node *findNode(Node *curr, int value)
+{
+    if (curr == NULL)
+        return NULL;
+
+    if (curr->data == value)
+        return curr;
+
+    Node *left = findNode(curr->left, value);
+
+    if (left != NULL)
+        return left;
+
+    return findNode(curr->right, value);
+}
+
+//================ Height =================
+
+int height(Node *curr)
+{
+    if (curr == NULL)
+        return -1;
+
+    int leftHeight = height(curr->left);
+    int rightHeight = height(curr->right);
+
+    if (leftHeight > rightHeight)
+        return leftHeight + 1;
+    else
+        return rightHeight + 1;
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        cout << "\n========== MENU ==========\n";
+        cout << "1. Insert Element\n";
+        cout << "2. Display Inorder\n";
+        cout << "3. Search Element\n";
+        cout << "4. Mirror Tree\n";
+        cout << "5. Find Predecessor & Successor\n";
+        cout << "6. Find Level of Element\n";
+        cout << "7. Find Height of Element\n";
+        cout << "8. Exit\n";
+
+        cout << "\nEnter Choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+        {
+            int val;
+            cout << "Enter Value: ";
+            cin >> val;
+
+            insertElement(val);
+            break;
+        }
+
+        case 2:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+            }
+            else
+            {
+                cout << "Inorder Traversal: ";
+                InOrder(Root);
+                cout << endl;
+            }
+            break;
+        }
+
+        case 3:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+                break;
+            }
+
+            int val;
+            cout << "Enter Value to Search: ";
+            cin >> val;
+
+            if (Search(Root, val))
+                cout << "Value Found.\n";
+            else
+                cout << "Value Not Found.\n";
+
+            break;
+        }
+
+        case 4:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+                break;
+            }
+
+            mirror(Root);
+
+            cout << "Mirror Image Created Successfully.\n";
+            cout << "Inorder Traversal: ";
+            InOrder(Root);
+            cout << endl;
+
+            break;
+        }
+
+        case 5:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+                break;
+            }
+
+            int val;
+
+            cout << "Enter Value: ";
+            cin >> val;
+
+            predecessorSuccessor(val);
+
+            break;
+        }
+
+        case 6:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+                break;
+            }
+
+            int val;
+
+            cout << "Enter Value: ";
+            cin >> val;
+
+            int level = findLevel(Root, val, 0);
+
+            if (level == -1)
+                cout << "Value Not Found.\n";
+            else
+                cout << "Level = " << level << endl;
+
+            break;
+        }
+
+        case 7:
+        {
+            if (Root == NULL)
+            {
+                cout << "Tree is Empty.\n";
+                break;
+            }
+
+            int val;
+
+            cout << "Enter Value: ";
+            cin >> val;
+
+            Node *temp = findNode(Root, val);
+
+            if (temp == NULL)
+            {
+                cout << "Value Not Found.\n";
+            }
+            else
+            {
+                cout << "Height = " << height(temp) << endl;
+            }
+
+            break;
+        }
+
+        case 8:
+        {
+            cout << "Exiting Program...\n";
+            break;
+        }
+
+        default:
+            cout << "Invalid Choice.\n";
+        }
+
+    } while (choice != 8);
+
+    return 0;
+}

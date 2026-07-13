@@ -41,6 +41,17 @@ void deleteElement(int value)
         cout << "List is empty" << endl;
         return;
     }
+     Node *cur = list;
+
+    if (value == cur->data){
+        if (list->next == NULL){
+            list = NULL;
+            free(list);
+            cout << "Deleted " << value << endl;
+            return;
+        }
+           
+    }
 
     Node *cur = list;
 

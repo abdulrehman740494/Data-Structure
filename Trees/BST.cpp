@@ -28,7 +28,8 @@ Node* insertElement(Node* curr, int val) {
 }
 
 void PreOrder(Node* curr) {
-    if (curr) {
+    if (curr==NULL) return;
+    {
         cout << curr->data << " ";
         PreOrder(curr->left);
         PreOrder(curr->right);
@@ -36,7 +37,8 @@ void PreOrder(Node* curr) {
 }
 
 void PostOrder(Node* curr) {
-    if (curr) {
+    if (curr==NULL) return;
+    {
         PostOrder(curr->left);
         PostOrder(curr->right);
         cout << curr->data << " ";
@@ -44,7 +46,8 @@ void PostOrder(Node* curr) {
 }
 
 void InOrder(Node* curr) {
-    if (curr) {
+    if (curr==NULL) return;
+    {
         InOrder(curr->left);
         cout << curr->data << " ";
         InOrder(curr->right);
