@@ -19,12 +19,11 @@ int main() {
 
             cout << "Value found at index: ";
 
-            // finding left side duplicates
             int i = mid;
             while (i >= 0 && arr[i] == match) {
                 i--;
             }
-            i++; // correct position
+            i++; 
 
             //ab yahan se mtlb 4 se wo agay move kryga aur saray right side walay duplicates ko print kryga
             while (i < 10 && arr[i] == match) {

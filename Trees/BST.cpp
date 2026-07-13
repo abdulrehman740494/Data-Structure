@@ -58,7 +58,7 @@ int main() {
     int choice;
 
     do {
-        cout << "\n===== MENU =====\n";
+        cout << "\n MENU \n";
         cout << "1. Insert element\n";
         cout << "2. Display tree\n";
         cout << "3. Exit\n";

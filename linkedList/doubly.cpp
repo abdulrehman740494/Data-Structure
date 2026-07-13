@@ -60,14 +60,13 @@ void deleteElement(int value)
         list = list->next;
 
         if (list != NULL)
-            list->prev = NULL;  // naya head ka prev NULL karo
+            list->prev = NULL;  
 
         free(cur);
         cout << "Deleted " << value << endl;
         return;
     }
 
-    // Case 2: baaki nodes mein dhundo
     Node *prev = list;
     cur = cur->next;
 
@@ -75,10 +74,10 @@ void deleteElement(int value)
     {
         if (value == cur->data)
         {
-            prev->next = cur->next;  // pichla node aage jump kare
+            prev->next = cur->next;  
 
             if (cur->next != NULL)
-                cur->next->prev = prev;  // agla node peeche jump kare
+                cur->next->prev = prev;  
 
             free(cur);
             cout << "Deleted " << value << endl;
@@ -126,7 +125,7 @@ int main()
 
     while (true)
     {
-        cout << "\n=== LINKED LIST OPERATIONS ===" << endl;
+        cout << "\n LINKED LIST OPERATIONS " << endl;
         cout << "1- Insert (at end)" << endl;
         cout << "2- Display" << endl;
         cout << "3- Search" << endl;

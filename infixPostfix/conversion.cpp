@@ -1,18 +1,14 @@
 #include <iostream>
 using namespace std;
 
-// Node of Stack
 struct Node
 {
-    char value;      // Stores operator (+, -, *, etc.)
-    Node* next;      // Points to next node
+    char value;      
+    Node* next;      
 };
 
-// Top pointer of stack
 Node* Top = NULL;
 
-
-// Function to insert an operator into stack
 void push(char operatorSymbol)
 {
     Node* temp = new Node();
@@ -24,7 +20,6 @@ void push(char operatorSymbol)
 }
 
 
-// Function to see top element without removing it
 char peek()
 {
     if (Top == NULL)
@@ -34,7 +29,6 @@ char peek()
 }
 
 
-// Function to remove top element from stack
 char pop()
 {
     if (Top == NULL)
@@ -55,7 +49,6 @@ char pop()
 }
 
 
-// Function to return precedence of operators
 int getPrecedence(char operatorSymbol)
 {
     switch (operatorSymbol)
@@ -88,7 +81,6 @@ int getPrecedence(char operatorSymbol)
 }
 
 
-// Checks whether character is operand or not
 bool isOperand(char currentCharacter)
 {
     if ((currentCharacter >= 'A' && currentCharacter <= 'Z') ||
@@ -102,26 +94,21 @@ bool isOperand(char currentCharacter)
 }
 
 
-// Converts Infix expression into Postfix
 void infixToPostfix(char expression[])
 {
     int currentIndex = 0;
 
     while (expression[currentIndex] != '\0')
     {
-        // Current character being processed
         char currentCharacter = expression[currentIndex];
 
-        // If operand, print directly
         if (isOperand(currentCharacter))
         {
             cout << currentCharacter;
         }
 
-        // If operator
         else
         {
-            // Pop all operators having higher or equal precedence
             while (Top != NULL &&
                    getPrecedence(peek()) >=
                    getPrecedence(currentCharacter))
@@ -129,14 +116,11 @@ void infixToPostfix(char expression[])
                 cout << pop();
             }
 
-            // Push current operator
             push(currentCharacter);
         }
-
         currentIndex++;
     }
 
-    // Print remaining operators from stack
     while (Top != NULL)
     {
         cout << pop();

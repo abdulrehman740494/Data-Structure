@@ -120,7 +120,7 @@ int main()
 
     while (true)
     {
-        cout << "\n=== LINKED LIST OPERATIONS ===" << endl;
+        cout << "\n LINKED LIST OPERATIONS " << endl;
         cout << "1- Insert (at end)" << endl;
         cout << "2- Display" << endl;
         cout << "3- Search" << endl;

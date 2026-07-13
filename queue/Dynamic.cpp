@@ -57,17 +57,14 @@ void display(){
 
 int main() {
 
-    //Added elements to rear
     enQueue(10);
     enQueue(23);
     enQueue(44);
     display();
 
-    //Removed (dequeued) element from front
     deQueue();
     display();
 
-    //Emptyin' the queue
     while (front != NULL) {
         deQueue();
     }

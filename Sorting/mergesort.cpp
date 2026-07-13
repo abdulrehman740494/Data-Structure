@@ -9,7 +9,6 @@ void merge(int arr[], int l, int m, int r)
 
     int temp[100];
 
-    // Compare and store smaller element
     while(i <= m && j <= r)
     {
         if(arr[i] <= arr[j])
@@ -25,7 +24,6 @@ void merge(int arr[], int l, int m, int r)
         k++;
     }
 
-    // Copy remaining elements (left side)
     while(i <= m)
     {
         temp[k] = arr[i];
@@ -33,7 +31,6 @@ void merge(int arr[], int l, int m, int r)
         k++;
     }
 
-    // Copy remaining elements (right side)
     while(j <= r)
     {
         temp[k] = arr[j];
@@ -41,7 +38,6 @@ void merge(int arr[], int l, int m, int r)
         k++;
     }
 
-    // Copy back to original array
     for(int x = 0; x < k; x++)
     {
         arr[l + x] = temp[x];

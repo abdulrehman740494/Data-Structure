@@ -10,7 +10,6 @@ struct Node
 
 Node *Root = NULL;
 
-//====================== Queue ======================
 
 Node *Queue[100];
 int front = -1;
@@ -45,7 +44,6 @@ Node *dequeue()
     return temp;
 }
 
-//================ Heap Style Insertion ================
 
 void insertElement(int val)
 {
@@ -94,7 +92,6 @@ void insertElement(int val)
     }
 }
 
-//================ Traversals =================
 
 void InOrder(Node *curr)
 {
@@ -108,7 +105,6 @@ void InOrder(Node *curr)
     InOrder(curr->right);
 }
 
-//================ Search =================
 
 bool Search(Node *curr, int value)
 {
@@ -122,7 +118,6 @@ bool Search(Node *curr, int value)
            Search(curr->right, value);
 }
 
-//================ Mirror Image =================
 
 void mirror(Node *curr)
 {
@@ -137,7 +132,6 @@ void mirror(Node *curr)
     mirror(curr->right);
 }
 
-//================ Store Inorder =================
 
 int arr[100];
 int index = 0;
@@ -154,7 +148,6 @@ void storeInorder(Node *curr)
     storeInorder(curr->right);
 }
 
-//================ Predecessor & Successor =================
 
 void predecessorSuccessor(int value)
 {
@@ -190,7 +183,6 @@ void predecessorSuccessor(int value)
         cout << "Successor : " << arr[pos + 1] << endl;
 }
 
-//================ Find Level =================
 
 int findLevel(Node *curr, int value, int level)
 {
@@ -208,7 +200,6 @@ int findLevel(Node *curr, int value, int level)
     return findLevel(curr->right, value, level + 1);
 }
 
-//================ Find Node =================
 
 Node *findNode(Node *curr, int value)
 {
@@ -226,7 +217,6 @@ Node *findNode(Node *curr, int value)
     return findNode(curr->right, value);
 }
 
-//================ Height =================
 
 int height(Node *curr)
 {
@@ -248,7 +238,7 @@ int main()
 
     do
     {
-        cout << "\n========== MENU ==========\n";
+        cout << "\n MENU \n";
         cout << "1. Insert Element\n";
         cout << "2. Display Inorder\n";
         cout << "3. Search Element\n";

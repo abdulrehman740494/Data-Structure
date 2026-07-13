@@ -146,7 +146,6 @@ void addEdge(char vertex1, char vertex2)
         cout << "Vertex does not Exist." << endl;
         return;
     }
-    // V1 - v2 to edge
     Edge *temp1 = (Edge *)malloc(sizeof(Edge));
     temp1->v = v2;
     temp1->enext = NULL;
@@ -163,7 +162,6 @@ void addEdge(char vertex1, char vertex2)
         }
         curr1->enext = temp1;
     }
-    // v2 to v1 edge
     Edge *temp2 = (Edge *)malloc(sizeof(Edge));
     temp2->v = v1;
     temp2->enext = NULL;
@@ -296,7 +294,7 @@ void DFS()
         }
     }
 }
-void RemoveVertex(char value)  // Step 1: Remove all edges pointing to this vertex
+void RemoveVertex(char value)  
 {
     Vertex *V = graph;
     while (V != NULL)
@@ -327,7 +325,7 @@ void RemoveVertex(char value)  // Step 1: Remove all edges pointing to this vert
         }
         V = V->vnext;
     }
-     // Step 2: Remove the vertex itself
+
     Vertex *V = graph;
     Vertex *Vprev = NULL;
     while (V != NULL)
@@ -390,7 +388,6 @@ void find_path(char vert1, char vert2)
         return;
     }
 
-    // reset
     Vertex *temp = graph;
     while (temp)
     {
@@ -446,7 +443,7 @@ int main()
 
     while (true)
     {
-        cout << "\n--- MENU ---\n";
+        cout << "\nMENU\n";
         cout << "1. Add Vertex \n2. Display \n3. Add Edge \n4. DFS \n5. Degree \n6. BFS \n7. Remove Vertex\n8. Path \n";
         cout << "Enter choice: ";
         cin >> choice;

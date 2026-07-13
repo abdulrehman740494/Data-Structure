@@ -99,7 +99,7 @@ int main()
 
     do
     {
-        cout << "\n===== MENU =====\n";
+        cout << "\n MENU \n";
         cout << "1. Insert element\n";
         cout << "2. Search element\n";
         cout << "3. Display Hashtable\n";

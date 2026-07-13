@@ -13,7 +13,6 @@ Node *Head = NULL;
 Node *Tail = NULL;
 int currentIndex = 0;
 
-//================ INSERT =================
 
 void insert(int value)
 {
@@ -35,7 +34,6 @@ void insert(int value)
     Tail = temp;
 }
 
-//================ DISPLAY =================
 
 void display()
 {
@@ -52,7 +50,6 @@ void display()
     cout << "NULL\n";
 }
 
-//================ SWAP =================
 
 void swapData(Node *a, Node *b)
 {
@@ -61,7 +58,6 @@ void swapData(Node *a, Node *b)
     b->data = temp;
 }
 
-//================ PARTITION =================
 
 Node* partition(Node *start, Node *end)
 {
@@ -92,7 +88,6 @@ Node* partition(Node *start, Node *end)
     return idx;
 }
 
-//================ QUICK SORT =================
 
 void quickSort(Node *start, Node *end)
 {
@@ -109,7 +104,6 @@ void quickSort(Node *start, Node *end)
     }
 }
 
-//================ MAIN =================
 
 int main()
 {

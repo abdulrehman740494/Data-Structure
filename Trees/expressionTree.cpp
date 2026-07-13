@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-//================ STACK FOR OPERATORS =================
 
 struct Node
 {
@@ -76,7 +75,6 @@ bool isOperand(char currentCharacter)
     return false;
 }
 
-//================ INFIX TO POSTFIX =================
 
 void infixToPostfix(char expression[], char postfix[])
 {
@@ -114,9 +112,7 @@ void infixToPostfix(char expression[], char postfix[])
     postfix[k] = '\0';
 }
 
-//================ EXPRESSION TREE =================
 
-// Tree Node
 struct ETNode
 {
     char data;
@@ -124,7 +120,6 @@ struct ETNode
     ETNode* right;
 };
 
-// Stack for Tree Nodes
 struct TreeStack
 {
     ETNode* data;
@@ -170,7 +165,6 @@ ETNode* createNode(char value)
     return temp;
 }
 
-// Build Tree from Postfix
 ETNode* buildExpressionTree(char postfix[])
 {
     int i = 0;
@@ -179,13 +173,11 @@ ETNode* buildExpressionTree(char postfix[])
     {
         char currentCharacter = postfix[i];
 
-        // Operand
         if (isOperand(currentCharacter))
         {
             pushTreeNode(createNode(currentCharacter));
         }
 
-        // Operator
         else
         {
             ETNode* rightChild = popTreeNode();
@@ -205,9 +197,7 @@ ETNode* buildExpressionTree(char postfix[])
     return popTreeNode();
 }
 
-//================ TRAVERSALS =================
 
-// Inorder Traversal
 void inorder(ETNode* root)
 {
     if (root == NULL)
@@ -218,7 +208,6 @@ void inorder(ETNode* root)
     inorder(root->right);
 }
 
-// Preorder Traversal
 void preorder(ETNode* root)
 {
     if (root == NULL)
@@ -229,7 +218,6 @@ void preorder(ETNode* root)
     preorder(root->right);
 }
 
-// Postorder Traversal
 void postorder(ETNode* root)
 {
     if (root == NULL)
@@ -240,7 +228,6 @@ void postorder(ETNode* root)
     cout << root->data;
 }
 
-//================ MAIN =================
 
 int main()
 {
@@ -254,7 +241,6 @@ int main()
 
     cout << "Postfix Expression: " << postfix << endl;
 
-    // Build Expression Tree
     ETNode* root = buildExpressionTree(postfix);
 
     cout << "Inorder Traversal: ";

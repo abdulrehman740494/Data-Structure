@@ -12,18 +12,12 @@ struct Node
 
 Node *Root = NULL;
 
-//=========================================
-// Find Median Index
-//=========================================
 
 int findMedian(int start, int end)
 {
     return (start + end) / 2;
 }
 
-//=========================================
-// Create 4-Way Tree Recursively
-//=========================================
 
 Node* createTree(int arr[], int start, int end)
 {
@@ -41,44 +35,28 @@ Node* createTree(int arr[], int start, int end)
     temp->middle2 = NULL;
     temp->right = NULL;
 
-    // Total Elements
     int total = end - start + 1;
 
-    // Agar sirf 1 element hai
     if(total == 1)
         return temp;
 
-    // Quarter Size
     int q = total / 4;
 
-    // Agar 4 se kam elements hon
     if(q == 0)
         q = 1;
 
-    //--------------------------------------
-    // S1
-    //--------------------------------------
 
     int s1Start = start;
     int s1End = mid - q - 1;
 
-    //--------------------------------------
-    // S2
-    //--------------------------------------
 
     int s2Start = mid - q;
     int s2End = mid - 1;
 
-    //--------------------------------------
-    // S3
-    //--------------------------------------
 
     int s3Start = mid + 1;
     int s3End = mid + q;
 
-    //--------------------------------------
-    // S4
-    //--------------------------------------
 
     int s4Start = mid + q + 1;
     int s4End = end;
@@ -99,9 +77,6 @@ Node* createTree(int arr[], int start, int end)
 }
 
 
-//=====================================================
-// Display Tree (Preorder)
-//=====================================================
 
 void display(Node *curr)
 {
@@ -116,9 +91,6 @@ void display(Node *curr)
     display(curr->right);
 }
 
-//=====================================================
-// Find Level of Every Node
-//=====================================================
 
 void printLevel(Node *curr, int level)
 {
@@ -134,9 +106,6 @@ void printLevel(Node *curr, int level)
     printLevel(curr->right, level + 1);
 }
 
-//=====================================================
-// Height Function
-//=====================================================
 
 int maxValue(int a, int b)
 {
@@ -163,9 +132,6 @@ int height(Node *curr)
     return ans + 1;
 }
 
-//=====================================================
-// Print Height of Every Node
-//=====================================================
 
 void printHeight(Node *curr)
 {

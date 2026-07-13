@@ -167,7 +167,7 @@ int main()
 
     do
     {
-        cout << "\n========== MENU ==========\n";
+        cout << "\n MENU \n";
         cout << "1. Insert Element\n";
         cout << "2. Display Inorder\n";
         cout << "3. Search Element\n";

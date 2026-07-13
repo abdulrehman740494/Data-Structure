@@ -85,7 +85,6 @@ void deleteElement(int value)
     Node *curr = list;
     Node *prev = NULL;
 
-    // Case 1: Only one node
     if (list->data == value && list->next == list)
     {
         list = NULL;
@@ -93,7 +92,6 @@ void deleteElement(int value)
         return;
     }
 
-    // Case 2: Delete head node
     if (list->data == value)
     {
         // Find last node
@@ -110,7 +108,6 @@ void deleteElement(int value)
         return;
     }
 
-    // Case 3: Delete other node
     prev = list;
     curr = list->next;
 

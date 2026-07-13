@@ -57,7 +57,7 @@ void search_course(int value)
     cout << "Value not found: " << value << endl;
 }
 
-void search_stu_in_course(int course, int seat) // this function is for searching a student in a specific course
+void search_stu_in_course(int course, int seat) 
 {
     CNode *Ccurr = Clist;
     bool found = false;
@@ -113,7 +113,7 @@ void search_stu_in_course(int course, int seat) // this function is for searchin
     }
 }
 
-void search_student(int seat)  // this function is for searching a student in all the courses and count the number of courses in which the student is enrolled
+void search_student(int seat)  
 {
     CNode *Ccurr = Clist;
     int count = 0;
@@ -254,21 +254,18 @@ void Delete_student2(int seat)
 
     int count = 0;
 
-    // Traverse all courses
     while (Ccurr != NULL)
     {
         SNode *Scurr = Ccurr->stu_list;
         SNode *prev = NULL;
 
-        // Traverse student list of current course
         while (Scurr != NULL)
         {
             if (Scurr->SNo == seat)
             {
-                // Node to delete found
+                
                 SNode *temp = Scurr;
 
-                // Case 1: first node delete
                 if (prev == NULL)
                 {
                     Ccurr->stu_list = Scurr->Snext;
@@ -319,17 +316,16 @@ void Delete_student(int seat)
         {
             if (Scurr->SNo == seat)
             {
-                SNode *temp = Scurr; // Store node to free it later
-
-                if (prev == NULL) // Case: Student is at the head
+                SNode *temp = Scurr; 
+                if (prev == NULL) 
                 {
                     Ccurr->stu_list = Scurr->Snext;
-                    Scurr = Ccurr->stu_list; // Move Scurr to the new head
+                    Scurr = Ccurr->stu_list; 
                 }
-                else // Case: Student is in the middle or end
+                else 
                 {
                     prev->Snext = Scurr->Snext;
-                    Scurr = prev->Snext; // Move Scurr to the next valid node
+                    Scurr = prev->Snext; 
                 }
 
                 free(temp);
@@ -356,24 +352,22 @@ void Delete_course(int value)
         return;
     }
 
-    while (Ccurr != NULL) // this for the loop to run until the Ccurr is not null for the course traversing
+    while (Ccurr != NULL) 
     {
-        if (value == Ccurr->CNo) // first case if the value matches the first course in the list
+        if (value == Ccurr->CNo) 
         {
-            Clist = Clist->Cnext;           // joins the course list to the second elemnt
-            SNode *Scurr = Ccurr->stu_list; // scurr points to the stu_list
+            Clist = Clist->Cnext;           
+            SNode *Scurr = Ccurr->stu_list; 
 
-            while (Scurr != NULL) // iterates until the scurr is not null
+            while (Scurr != NULL) 
             {
-                Ccurr->stu_list = Ccurr->stu_list->Snext; // joins the stu list to the list's second elemnt
+                Ccurr->stu_list = Ccurr->stu_list->Snext; 
 
-                free(Scurr); // frees the scurr which is in first run is at first elemnt
-
-                Scurr = Ccurr->stu_list; // points the scurr again at the list's first elemnt so that the elemnt deletion is always from the first element
-                // Scurr=Scurr->Snext;
+                free(Scurr); 
+                Scurr = Ccurr->stu_list; 
             }
-            free(Ccurr); // when the scurr is null and all the students gets deleted the Ccurr is now freed
-            return;      // returned from here so that now the Ccurr is not moved to the next
+            free(Ccurr); 
+            return;      
         }
 
         prev = Clist;
@@ -386,15 +380,15 @@ void Delete_course(int value)
                 prev->Cnext = Ccurr->Cnext;
                 SNode *Scurr = Ccurr->stu_list;
 
-                while (Scurr != NULL) // iterates until the scurr is not null
+                while (Scurr != NULL) 
                 {
                     Ccurr->stu_list = Ccurr->stu_list->Snext;
 
-                    free(Scurr); // frees the scurr which is in first run is at first elemnt
+                    free(Scurr); 
 
                     Scurr = Ccurr->stu_list;
                 }
-                free(Ccurr); // when the scurr is null and all the students gets deleted the Ccurr is now freed
+                free(Ccurr); 
                 return;
             }
             prev = Ccurr;
@@ -411,7 +405,7 @@ void display_all()
         cout << "Course List is empty, display not possible" << endl;
     }
 
-        while (Ccurr != NULL) // while loop for the course lists
+        while (Ccurr != NULL) 
         {
 
             cout << "\nThe course number " << Ccurr->CNo << endl;
@@ -419,7 +413,7 @@ void display_all()
             SNode *Scurr = Ccurr->stu_list;
             cout << "The roll number of students enrolled in this course are:\n";
 
-            while (Scurr != NULL) // another while loop for the student list
+            while (Scurr != NULL) 
             {
                 cout << Scurr->SNo << "\n";
                 Scurr = Scurr->Snext;
@@ -437,7 +431,7 @@ int main()
 
     while (true)
     {
-        cout << "\n--- MENU ---\n";
+        cout << "\n MENU \n";
         cout << "1. Insert course \n2. Insert student \n3. Search Course \n4. Search student  \n5. Search a student in a course  \n6. Delete a course \n7. Delete Student from a course \n8. Delete student \n9. Delete student 2nd Edition \n10. Display All \n11. Display Courses  \n12. Exit \n";
         cout << "Enter choice: ";
         cin >> choice;

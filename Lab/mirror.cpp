@@ -8,14 +8,11 @@ struct Node
     Node *right;
 };
 
-// Heap Array
 float arr[100];
 int heapSize = 0;
 
-// Root of Binary Tree
 Node *Root = NULL;
 
-// Insert into array (Heap style)
 void insertElement(float val)
 {
     if (heapSize == 100)
@@ -28,7 +25,6 @@ void insertElement(float val)
     heapSize++;
 }
 
-// Build Binary Tree from Array
 Node* BuildTree(int index)
 {
     if (index >= heapSize)
@@ -43,7 +39,6 @@ Node* BuildTree(int index)
     return temp;
 }
 
-// Mirror Function
 void Mirror(Node *curr)
 {
     if (curr == NULL)
@@ -57,7 +52,6 @@ void Mirror(Node *curr)
     Mirror(curr->right);
 }
 
-// Traversals
 void PreOrder(Node *curr)
 {
     if (curr == NULL)
@@ -94,7 +88,7 @@ int main()
 
     while (true)
     {
-        cout << "\n========== MENU ==========\n";
+        cout << "\n MENU \n";
         cout << "1. Insert Element\n";
         cout << "2. Build Binary Tree\n";
         cout << "3. Display Tree\n";
